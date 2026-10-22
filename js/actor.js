@@ -228,7 +228,7 @@
           st.moving = true;
         }
       }
-      const pose = st.moving && st.mode !== 'signature' ? 'run' : st.pose;
+      const pose = st.moving && st.mode !== 'signature' && st.mode !== 'act' ? (st.hopY > 0.25 ? 'jump' : 'run') : st.pose;
       st.phase += dt * (SPEED[pose] || 2.2);
       const want = runFace !== null ? runFace : facing();
       let da = want - p.root.rotation.y;
@@ -380,10 +380,15 @@
 
     return {
       attach, set, setScale, place, moveTo, react, act, update, hold, drop,
+      // a jump over something on the trail, at up speed v (m/s, at scale 1)
+      jump(v) {
+        if (st.hopY < 0.05) st.hopV = v;
+      },
+      get airborne() { return st.hopY > 0.02; },
       get entry() { return entry; },
       get person() { return p; },
       get mode() { return st.mode; },
-      get pose() { return st.moving && st.mode !== 'signature' ? 'run' : st.pose; },
+      get pose() { return st.moving && st.mode !== 'signature' && st.mode !== 'act' ? (st.hopY > 0.25 ? 'jump' : 'run') : st.pose; },
       get root() { return holder; },
       get scale() { return st.scale; },
       get moving() { return hasTarget; },

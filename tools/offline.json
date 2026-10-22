@@ -1,0 +1,7 @@
+[
+  { "label": "boot", "js": "JSON.stringify({state: game.info().state, title: document.title, lang: game.info().lang})", "wait": 300 },
+  { "label": "check", "js": "(() => { const r = game.check(); return JSON.stringify({ok: r.ok, stages: r.stats.stages, fails: r.fails.slice(0, 3)}); })()" },
+  { "label": "sabotage", "js": "(() => { const out = {}; for (const s of TY.check.SABOTAGE) { const r = game.check({seeds: 1, sabotage: s}); out[s] = r.ok ? 'NOT CAUGHT' : 'caught'; } return JSON.stringify(out); })()" },
+  { "label": "lesson", "js": "(() => { game.G.autoPause = false; game.start({kind:'lesson', ix:3, who:'tommy', level:'easy'}); const i = game.finish(300); return JSON.stringify({state: i.state, final: i.final && i.final.map(r => [r.wpm, r.acc, r.stars])}); })()" },
+  { "label": "adventure 2P zh", "js": "(() => { Kit.lang.set('zh'); game.start({kind:'adventure', ix:2, players:2}); const i = game.finish(300); return JSON.stringify({state: i.state, lang: i.lang, final: i.final && i.final.map(r => [r.id, r.wpm, r.acc, r.stars])}); })()", "wait": 500, "shot": "offline" }
+]

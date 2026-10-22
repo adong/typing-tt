@@ -1,0 +1,3 @@
+[
+  { "label": "title", "js": "JSON.stringify([innerWidth, innerHeight, game.info().state, game.info().lang])", "wait": 3500, "shot": "screenshot" }
+]
